@@ -1,25 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';  // Импортируйте Provider
+import { postApi } from './modules/postApi';
+import { configureStore } from '@reduxjs/toolkit';
+import PostList from './modules/PostList';
+import PostDetails from './modules/PsotDetails';
+import { Container, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 
-function App() {
+const store = configureStore({
+  reducer: {
+    [postApi.reducerPath]: postApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postApi.middleware),
+});
+
+const theme = createTheme();
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Router>
+          <Container maxWidth="md">
+            <Routes>
+              <Route path="/" element={<PostList />} />
+              <Route path="/post/:postId" element={<PostDetails />} />
+            </Routes>
+          </Container>
+        </Router>
+      </ThemeProvider>
+    </Provider>
   );
-}
+};
 
 export default App;
