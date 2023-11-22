@@ -20,7 +20,7 @@
 
 
 ---
-## The project is available on Githab at https://github.com/AndreyLysow/module31_homework.git
+## The project is available on Githab at https://github.com/AndreyLysow/picasso
 ---
 
 
